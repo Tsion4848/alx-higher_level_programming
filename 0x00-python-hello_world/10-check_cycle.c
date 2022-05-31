@@ -19,7 +19,7 @@ int check_cycle(listint_t *list)
 
 	while (ptr != NULL && ptr2 != NULL && ptr2->next != NULL)
 	{
-		if (ptr == ptr2)
+		if (ptr2 == ptr)
 		{
 			return (1);
 		}
