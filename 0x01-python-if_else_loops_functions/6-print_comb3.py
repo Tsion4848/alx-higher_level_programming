@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-for i in range(0, 10):
-    for j in range(0, 10):
-        if int (str(i) + str(j)) == 89:
-            print("{:d}{:d}".format(i, j))
-        else if int(str(i) + str(j)) != int(str(j) + str(i)):
-            print("{:d}{:d}".format(i, j), end=", ")
+for x in range(0, 10):
+    d1 = x / 10
+    d2 = x % 10
+    if x == 89:
+        print("{:d}".format(x))
+    elif d1 < d2:
+        print("{:02d}".format(x), end=", ")
