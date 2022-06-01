@@ -6,4 +6,4 @@ def uppercase(str):
             if (chr(y) != x[-1]): 
                 print("{:s}".format(chr(y)), end="")
             else:
-                print()
+                print("{:s}".format(chr(y)))
