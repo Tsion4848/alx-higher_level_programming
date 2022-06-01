@@ -4,7 +4,7 @@ def uppercase(str):
     for x in str:
         if ord(x) >= 97 and ord(x) <= 122:
             y = ord(x) - 32;
-        if ord(x) >= 65 and ord(x) <= 90:
+        elif ord(x) >= 65 and ord(x) <= 90:
             y = ord(x)
         else:
             y = ord(x)
