@@ -6,4 +6,4 @@ for x in "zyxwvutsrqponmlkjhgfedcba":
         y = ord(x) - 32
     else:
         y = ord(x)
-    print("{:s}".format(chr(y)), end="")abcdefghijklmnopqrstuvwxy
+    print("{:s}".format(chr(y)), end="")
