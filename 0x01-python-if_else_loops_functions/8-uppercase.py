@@ -4,7 +4,6 @@ def uppercase(str):
     for x in str:
         if ord(x) >= 97 and ord(x) <= 122:
             y = ord(x) - 32;
-            if chr(y) != str[length - 2]:
-                print("{:s}".format(chr(y)), end="")
-            else: 
-                print("{:s}".format(chr(y)))
+        if ord(x) >= 65 and ord(x) <= 90:
+            y = ord(x)
+        print("{:s}".format(chr(y)))
