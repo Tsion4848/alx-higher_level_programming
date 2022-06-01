@@ -6,4 +6,7 @@ def uppercase(str):
             y = ord(x) - 32;
         if ord(x) >= 65 and ord(x) <= 90:
             y = ord(x)
-        print("{:s}".format(chr(y)))
+        else:
+            y = ord(x)
+        print("{:s}".format(chr(y)), end="")
+    print()
