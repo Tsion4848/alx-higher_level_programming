@@ -10,4 +10,4 @@ for x in "abcdefghijklmnopqrstuvwxyz":
         y = ord(x) + 32
     else:
         y = ord(x)
-    print("{:s}".format(chr(y)), end=""i)
+    print("{:s}".format(chr(y)), end="")
