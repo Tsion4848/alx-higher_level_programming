@@ -1,9 +1,3 @@
 #!/usr/bin/python3
-for x in "zyxwvutsrqponmlkjhgfedcba":
-    if ord(x) >= 97 and ord(x) <= 122:
-        y = ord(x)
-        y = y + 1
-        y = ord(x) - 32
-    else:
-        y = ord(x)
-    print("{:s}".format(chr(y)), end="")
+for x in range(122, 96, -1):
+    print("{:s}".format((x - 32) if x % 2 else x), end="")
