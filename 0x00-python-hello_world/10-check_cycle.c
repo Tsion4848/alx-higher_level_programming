@@ -8,24 +8,32 @@
 int check_cycle(listint_t *list)
 {
 	listint_t *ptr = list;
+	listint_t *ptrp = list;
 
-	if (list == NULL)
+	while (list && ptr && ptr->next)
 	{
-		return (0);
-	}
-
-	while (list)
-	{
-		if (list->next == NULL)
-			return (0);
 		list = list->next;
-		
-		if (ptr->next == NULL || ptr->next->next == NULL)
-			return (0);
-		ptr = ptr->next;
-		ptr = ptr->next;
+		ptr = ptr->next->next;
+
 		if (list == ptr)
+		{
+			list = ptrp;
+			ptrp = ptr;
+			while (1)
+			{
+				ptr = ptrp;
+				while (ptr->next != list && ptr->next != ptrp)
+				{
+					ptr = ptr->next;
+				}
+				if (ptr->next == list)
+					break;
+
+				list = list->next;
+			}
 			return (1);
+		}
 	}
+
 	return (0);
 }
