@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 if __name__ == '__main__':
-    from calculator_1.py import add, sub, mul, div
+    from calculator_1 import add, sub, mul, div
     from sys import argv
     if len(argv) == 4:
         a = int(argv[1])
