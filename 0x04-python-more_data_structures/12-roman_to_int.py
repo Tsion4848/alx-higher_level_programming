@@ -7,10 +7,10 @@ def roman_to_int(roman_string):
 
         for x in reversed(roman_string):
             change = dictnums[x]
-            if result < change * 5:
+            if res < change * 5:
                 res = res + change
             else:
                 res = res - change
-            return res
+        return res
     else:
         return 0
