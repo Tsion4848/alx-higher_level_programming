@@ -4,4 +4,6 @@ def uniq_add(my_list=[]):
     for x in my_list:
         if my_list.count(x) == 1:
             sum = sum + x
+        else:
+            sum = sum + 0
     return sum
