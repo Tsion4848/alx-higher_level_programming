@@ -2,5 +2,5 @@
 def multiply_by_2(a_dictionary):
     mult = a_dictionary.copy()
     for k in mult.keys():
-        mult[key] = mult[key] * 2
+        mult[k] = mult[k] * 2
     return mult
