@@ -3,7 +3,6 @@
 Definition of a class Rectangle
 """
 
-
 class Rectangle:
     """
     define class Rectangle with some attributes: width and height
@@ -46,7 +45,7 @@ class Rectangle:
             return (2*(self.__width + self.__height))
 
     def __str__(self):
-        if self.__width ==0 or self.__height == 0:
+        if self.__width == 0 or self.__height == 0:
             return ('')
         x = ''
         for i in range(self.__height):
