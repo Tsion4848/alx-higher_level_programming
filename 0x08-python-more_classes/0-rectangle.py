@@ -2,6 +2,5 @@
 class Rectangle:
     """
     Creating an empty class that defines a rectangle
-    
     """
-    pass
+    pass
