@@ -1,102 +1,104 @@
 #!/usr/bin/python3
+
+"""Defines unittests for base.py.
+Unittest classes:
+    TestBase_instantiation - line 22
+    TestBase_to_json_string - line 110
+    TestBase_save_to_file - line 156
+    TestBase_from_json_string - line 234
+    TestBase_create - line 288
+    TestBase_load_from_file - line 340
+    TestBase_save_to_file_csv - line 406
+    TestBase_load_from_file_csv - line 484
+"""
+import os
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
-from models.square import Square
-import json
-import pep8
 
 
-class TestBase(unittest.TestCase):
-    """class TestBase"""
-    def test_id(self):
-        """check id"""
-        Base._Base__nb_objects = 0
+class TestBase_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the Base class."""
+
+    def test_no_arg(self):
         b1 = Base()
-        self.assertIsNotNone(id(b1))
-
-    def test_init(self):
-        """check instance"""
-        Base._Base__nb_objects = 0
         b2 = Base()
-        self.assertIsInstance(b2, Base)
+        self.assertEqual(b1.id, b2.id - 1)
 
-    def test_numObj(self):
-        """check number of objects"""
-        Base._Base__nb_objects = 0
+    def test_three_bases(self):
+        b1 = Base()
+        b2 = Base()
         b3 = Base()
-        self.assertEqual(b3.id, 1)
+        self.assertEqual(b1.id, b3.id - 2)
 
-    def test_toJsonString(self):
-        """check to_json_string"""
-        Base._Base__nb_objects = 0
-        r1 = Rectangle(10, 7, 2, 8)
-        a_dict = r1.to_dictionary()  # dict
-        json_string = json.dumps([a_dict])  # str of list dict
-        json_listdict = r1.to_json_string([a_dict])  # str of list dict
-        self.assertTrue(json_string == json_listdict)
+    def test_None_id(self):
+        b1 = Base(None)
+        b2 = Base(None)
+        self.assertEqual(b1.id, b2.id - 1)
 
-    def test_saveToFile(self):
-        """check save_to_file"""
-        Base._Base__nb_objects = 0
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
-        a_dict = [r1.to_dictionary(), r2.to_dictionary()]  # list dict
-        Rectangle.save_to_file([r1, r2])
-        with open("Rectangle.json", "r") as file:
-            list_dict = json.loads(file.read())  # list dict
-        self.assertTrue(a_dict == list_dict)
+    def test_unique_id(self):
+        self.assertEqual(12, Base(12).id)
 
-    def test_fromJsonString(self):
-        """check from_json_string"""
-        Base._Base__nb_objects = 0
-        list_input = [{'id': 89, 'width': 10, 'height': 4},
-                      {'id': 7, 'width': 1, 'height': 7}]  # list dict
-        json_list_input = Rectangle.to_json_string(list_input)  # str list dict
-        list_output = Rectangle.from_json_string(json_list_input)  # list dict
-        self.assertTrue(list_input == list_output)
+    def test_nb_instances_after_unique_id(self):
+        b1 = Base()
+        b2 = Base(12)
+        b3 = Base()
+        self.assertEqual(b1.id, b3.id - 1)
 
-    def test_create(self):
-        """check create"""
-        Base._Base__nb_objects = 0
-        r1 = Rectangle(3, 5, 1)
-        r1_dictionary = r1.to_dictionary()
-        r2 = Rectangle.create(**r1_dictionary)
-        self.assertFalse(r1 is r2)
-        self.assertFalse(r1 == r2)
+    def test_id_public(self):
+        b = Base(12)
+        b.id = 15
+        self.assertEqual(15, b.id)
 
-    def test_loadFromFile(self):
-        """check load from file"""
-        Base._Base__nb_objects = 0
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
-        list_rectangles_input = [r1, r2]
-        Rectangle.save_to_file(list_rectangles_input)
-        list_rectangles_output = Rectangle.load_from_file()
-        self.assertTrue(type(list_rectangles_output) == list)
-        for rect in list_rectangles_input:
-            self.assertTrue(isinstance(rect, Rectangle))
-        for rect in list_rectangles_output:
-            self.assertTrue(isinstance(rect, Rectangle))
-        s1 = Square(5)
-        s2 = Square(7, 9, 1)
-        list_squares_input = [s1, s2]
-        Square.save_to_file(list_squares_input)
-        list_squares_output = Square.load_from_file()
-        self.assertTrue(type(list_squares_output) == list)
-        for sqr in list_squares_input:
-            self.assertTrue(isinstance(sqr, Square))
-        for sqr in list_squares_output:
-            self.assertTrue(isinstance(sqr, Square))
+    def test_nb_instances_private(self):
+        with self.assertRaises(AttributeError):
+            print(Base(12).__nb_instances)
 
-    def test_pep8_model(self):
-        """tests for pep8"""
-        p8 = pep8.StyleGuide(quiet=True)
-        p = p8.check_files(['models/base.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
+    def test_str_id(self):
+        self.assertEqual("hello", Base("hello").id)
 
-    def test_pep8_test(self):
-        """tests for pep8"""
-        p8 = pep8.StyleGuide(quiet=True)
-        p = p8.check_files(['tests/test_models/test_base.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
+    def test_float_id(self):
+        self.assertEqual(5.5, Base(5.5).id)
+
+    def test_complex_id(self):
+        self.assertEqual(complex(5), Base(complex(5)).id)
+
+    def test_dict_id(self):
+        self.assertEqual({"a": 1, "b": 2}, Base({"a": 1, "b": 2}).id)
+
+    def test_bool_id(self):
+        self.assertEqual(True, Base(True).id)
+
+    def test_list_id(self):
+        self.assertEqual([1, 2, 3], Base([1, 2, 3]).id)
+
+    def test_tuple_id(self):
+        self.assertEqual((1, 2), Base((1, 2)).id)
+
+    def test_set_id(self):
+        self.assertEqual({1, 2, 3}, Base({1, 2, 3}).id)
+
+    def test_frozenset_id(self):
+        self.assertEqual(frozenset({1, 2, 3}), Base(frozenset({1, 2, 3})).id)
+
+    def test_range_id(self):
+        self.assertEqual(range(5), Base(range(5)).id)
+
+    def test_bytes_id(self):
+        self.assertEqual(b'Python', Base(b'Python').id)
+
+    def test_bytearray_id(self):
+        self.assertEqual(bytearray(b'abcefg'), Base(bytearray(b'abcefg')).id)
+
+    def test_memoryview_id(self):
+        self.assertEqual(memoryview(b'abcefg'), Base(memoryview(b'abcefg')).id)
+
+    def test_inf_id(self):
+        self.assertEqual(float('inf'), Base(float('inf')).id)
+
+    def test_NaN_id(self):
+        self.assertNotEqual(float('nan'), Base(float('nan')).id)
+
+    def test_two_args(self):
+        with self.assertRaises(TypeError):
+            Base(1, 2)
